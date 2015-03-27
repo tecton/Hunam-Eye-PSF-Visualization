@@ -225,10 +225,18 @@ function draw_intersection_points(handles)
     focus = get(handles.focus_value, 'String');
     R = get(handles.r_value, 'String');
     pupil = get(handles.pupil_value, 'String');
+    
+    % readin data
     filename = sprintf('..\\result\\focus-%s\\r-%s\\p-%s\\_%s.0_%s.0', focus, R, pupil, theta, phi);
     fid = fopen(strcat(filename, '.txt'), 'rt');
     offset = textscan(fid, '%f %f');
     fclose(fid);
+    
+    % calculate range
+    coc_x_range = range(offset{1});
+    coc_y_range = range(offset{2});
+    set(handles.x_range, 'String', coc_x_range);
+    set(handles.y_range, 'String', coc_y_range);
     
     axes(handles.image);
     cla(handles.image);
